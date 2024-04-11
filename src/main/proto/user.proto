@@ -1,0 +1,38 @@
+syntax = "proto3";
+package user;
+
+import "result.proto";
+
+option java_multiple_files = true;
+option java_package = "com.example.withit";
+option java_outer_classname = "UserProto";
+
+service UserService {
+  rpc signUp (UserCreateRequest) returns (UserCreateResponse);
+
+  rpc signIn (UserReadRequest) returns (UserReadResponse);
+}
+
+message UserCreateRequest {
+  string name = 1;
+  string device_token = 2;
+}
+
+message UserCreateResponse {
+  result.Result result = 1;
+}
+
+message UserReadRequest {
+  string device_token = 1;
+}
+
+message UserReadResponse {
+  result.Result result = 1;
+  UserReadResponseData data = 2;
+}
+
+message UserReadResponseData {
+  uint64 id = 1;
+  string name = 2;
+  string device_token = 3;
+}

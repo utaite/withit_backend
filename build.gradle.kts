@@ -5,8 +5,25 @@ plugins {
 	id("org.springframework.boot") version "3.2.4"
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.23"
+	kotlin("plugin.jpa") version "1.7.22"
+	kotlin("plugin.serialization") version "1.8.21"
 	kotlin("plugin.spring") version "1.9.23"
+	kotlin("plugin.allopen") version "1.3.71"
+	kotlin("plugin.noarg") version "1.3.71"
+	kotlin("kapt") version "1.8.21"
 	id("com.google.protobuf") version "0.9.4"
+}
+
+allOpen {
+	annotation("jakarta.persistence.Entity")
+	annotation("jakarta.persistence.MappedSuperclass")
+	annotation("jakarta.persistence.Embeddable")
+}
+
+noArg {
+	annotation("jakarta.persistence.Entity")
+	annotation("jakarta.persistence.MappedSuperclass")
+	annotation("jakarta.persistence.Embeddable")
 }
 
 group = "com.example"
@@ -35,8 +52,15 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+	// JPA
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// MySQL
+	implementation("mysql:mysql-connector-java:8.0.33")
+
 	// gRPC
 	implementation("io.grpc:grpc-kotlin-stub:1.4.1")
+	implementation("com.google.protobuf:protobuf-kotlin:3.22.2")
 	implementation("io.github.lognet:grpc-spring-boot-starter:5.1.5")
 
 	// Coroutine
@@ -56,16 +80,15 @@ protobuf {
 		}
 	}
 	generateProtoTasks {
-		all().forEach { task ->
-			task.plugins {
-				id("grpc")
-				id("grpckt")
+		ofSourceSet("main").forEach {
+			it.plugins {
+				id("grpc") {}
+				id("grpckt") {}
 			}
 
-			task.generateDescriptorSet = true
-			task.descriptorSetOptions.path = "${projectDir}/build/descriptors/${task.sourceSet.name}.dsc"
-			task.descriptorSetOptions.includeSourceInfo = true
-			task.descriptorSetOptions.includeImports = true
+			it.builtins {
+				id("kotlin")
+			}
 		}
 	}
 }

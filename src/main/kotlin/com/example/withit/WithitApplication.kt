@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class WithitApplication
 
 fun main(args: Array<String>) {
-	runApplication<WithitApplication>(*args)
+	runApplication<WithitApplication>(args = args)
 }
