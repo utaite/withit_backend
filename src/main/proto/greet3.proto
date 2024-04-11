@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.withit";
+option java_outer_classname = "Greet3Proto";
+
+package greet3;
+
+service Greet3Service {
+  rpc Greet3 (Greet3Request) returns (stream Greet3Response);
+}
+
+message Greet3Request {
+  string name = 1;
+}
+
+message Greet3Response {
+  string greeting = 1;
+}
