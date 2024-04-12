@@ -52,6 +52,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+
 	// JPA
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 

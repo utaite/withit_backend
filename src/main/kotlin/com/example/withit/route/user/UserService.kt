@@ -37,9 +37,8 @@ class UserService(
 
         userReadResponse {
             data = userReadResponseData {
-                id = user.id
-                name = user.name
-                deviceToken = user.deviceToken
+                id = user.id.toLong()
+                name = user.email
             }
             result = result {
                 code = ResultCode.SUCCESS.name

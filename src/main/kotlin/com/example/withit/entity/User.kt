@@ -1,17 +1,18 @@
 package com.example.withit.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType.IDENTITY
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
+@Table(name = "users")
 @Entity
 class User(
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    val id: Long = 0,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    val id: Int = 0,
 
-    val name: String = "",
+    @Column(name = "email")
+    val email: String = "",
 
+    @Column(name = "device_token")
     val deviceToken: String = "",
 )
