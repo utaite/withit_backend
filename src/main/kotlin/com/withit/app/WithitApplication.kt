@@ -1,4 +1,4 @@
-package com.example.withit
+package com.withit.app
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

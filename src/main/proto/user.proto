@@ -1,19 +1,17 @@
 syntax = "proto3";
 package user;
 
-import "result.proto";
-
 option java_multiple_files = true;
-option java_package = "com.example.withit";
+option java_package = "com.withit.app";
 option java_outer_classname = "UserProto";
 
-service UserService {
-  rpc signUp (UserCreateRequest) returns (UserCreateResponse);
-
-  rpc signIn (UserReadRequest) returns (UserReadResponse);
-}
+import "result.proto";
 
 message UserCreateRequest {
+  UserCreateRequestData data = 1;
+}
+
+message UserCreateRequestData {
   string name = 1;
   string device_token = 2;
 }
@@ -23,6 +21,10 @@ message UserCreateResponse {
 }
 
 message UserReadRequest {
+  UserReadRequestData data = 1;
+}
+
+message UserReadRequestData {
   string device_token = 1;
 }
 
