@@ -14,7 +14,6 @@ import com.withit.app.userReadResponse
 import com.withit.app.userReadResponseData
 import org.lognet.springboot.grpc.GRpcService
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 
 @GRpcService
 class UserService(
