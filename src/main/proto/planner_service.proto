@@ -1,0 +1,12 @@
+syntax = "proto3";
+package planner_service;
+
+option java_multiple_files = true;
+option java_package = "com.withit.app";
+option java_outer_classname = "PlannerServiceProto";
+
+import "planner.proto";
+
+service PlannerService {
+  rpc read (planner.PlannerReadRequest) returns (planner.PlannerReadResponse);
+}

@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus
 class UserService(
     private val userRepository: UserRepository,
 ) : UserServiceGrpcKt.UserServiceCoroutineImplBase() {
-    override suspend fun signUp(request: UserCreateRequest): UserCreateResponse = runCatching {
+    override suspend fun create(request: UserCreateRequest): UserCreateResponse = runCatching {
         require(userRepository.findByDeviceToken(request.data.deviceToken) == null)
 
         userRepository.save(
@@ -45,7 +45,7 @@ class UserService(
         }
     }
 
-    override suspend fun signIn(request: UserReadRequest): UserReadResponse = runCatching {
+    override suspend fun read(request: UserReadRequest): UserReadResponse = runCatching {
         val user = requireNotNull(userRepository.findByDeviceToken(request.data.deviceToken))
 
         userReadResponse {
@@ -63,7 +63,7 @@ class UserService(
         userReadResponse {
             result = result {
                 status = HttpStatus.OK.value()
-                type = ResultType.DIALOG.name
+                type = ResultType.PAGE.name
                 code = ResultCode.NOT_FOUND.name
             }
         }

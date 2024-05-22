@@ -1,0 +1,16 @@
+syntax = "proto3";
+package home_service;
+
+option java_multiple_files = true;
+option java_package = "com.withit.app";
+option java_outer_classname = "HomeServiceProto";
+
+import "home.proto";
+
+service HomeService {
+  rpc read (home.HomeReadRequest) returns (home.HomeReadResponse);
+
+  rpc update (home.HomeUpdateRequest) returns (home.HomeUpdateResponse);
+
+  rpc delete (home.HomeDeleteRequest) returns (home.HomeDeleteResponse);
+}
