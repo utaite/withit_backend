@@ -17,6 +17,7 @@ import com.withit.app.route.user.UserRepository
 import org.lognet.springboot.grpc.GRpcService
 import org.springframework.http.HttpStatus
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 @GRpcService
 class PlannerService(
@@ -36,6 +37,7 @@ class PlannerService(
             dateTime.atStartOfDay(),
             dateTime.plusDays(1).atStartOfDay().minusSeconds(1),
         )
+        val planHistoryGrouping = planHistories.groupBy { it.plan.id }
 
         plannerReadResponse {
             data = plannerReadResponseData {
@@ -43,20 +45,26 @@ class PlannerService(
                     planHistories
                         .map { it.plan.subject }
                         .distinct()
-                        .map {
+                        .map { subject ->
                             plannerReadResponseSubject {
-                                id = it.id.toLong()
-                                name = it.name
-                                code = it.code
-                                color = it.color.toLong()
-                                backgroundColor = it.backgroundColor.toLong()
+                                id = subject.id.toLong()
+                                name = subject.name
+                                code = subject.code
+                                color = subject.color.toLong()
+                                backgroundColor = subject.backgroundColor.toLong()
                                 this.plans.addAll(
-                                    planMap.getOrDefault(it.id, listOf()).map {
+                                    planMap.getOrDefault(subject.id, listOf()).map { plan ->
                                         plannerReadResponsePlan {
-                                            id = it.id.toLong()
-                                            detail = it.detail
+                                            id = plan.id.toLong()
+                                            detail = plan.detail
+                                            rate = planHistoryGrouping.getOrDefault(plan.id, listOf())
+                                                .sumOf { ChronoUnit.MINUTES.between(it.startedAt, it.endedAt) }
+                                                .toDouble()
+                                                .div(plan.durationMinutes.toDouble())
+                                                .times(100)
+                                                .toLong()
                                         }
-                                    }
+                                    },
                                 )
                             }
                         },
