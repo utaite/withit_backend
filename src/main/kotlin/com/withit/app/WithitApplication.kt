@@ -1,4 +1,4 @@
-package com.example.withit
+package com.withit.app
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class WithitApplication
 
 fun main(args: Array<String>) {
-	runApplication<WithitApplication>(*args)
+    runApplication<WithitApplication>(args = args)
 }

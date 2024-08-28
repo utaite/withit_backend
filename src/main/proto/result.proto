@@ -1,0 +1,13 @@
+syntax = "proto3";
+package result;
+
+option java_multiple_files = true;
+option java_package = "com.withit.app";
+option java_outer_classname = "ResultProto";
+
+message Result {
+  uint32 status = 1;
+  string code = 2;
+  string type = 3;
+  repeated string messages = 4;
+}
